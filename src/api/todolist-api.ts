@@ -16,10 +16,10 @@ export const todolistApi = {
         return instance.post<CommonResponseType<{ item: TodoType }>>('todo-lists', {title})
     },
     updateTodoTitle(todolistId: string, title: string) {
-        return instance.put<CommonResponseType<{}>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodo(todolistId: string) {
-        return instance.delete<CommonResponseType<{}>>(`todo-lists/${todolistId}`)
+        return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
     }
 }
 
@@ -30,7 +30,7 @@ type TodoType = {
     title: string
 }
 
-type CommonResponseType<T> = {
+type CommonResponseType<T={}> = {
     resultCode: number
     messages: Array<string>
     fieldsError: Array<string>
