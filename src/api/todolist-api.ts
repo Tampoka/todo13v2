@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -13,10 +13,11 @@ export const todolistApi = {
         return instance.get<Array<TodoType>>('todo-lists')
     },
     createTodo(title: string) {
-        return instance.post<CommonResponseType<{ item: TodoType }>>('todo-lists', {title})
+        return instance.post<CommonResponseType<{ item: TodoType }>, AxiosResponse<CommonResponseType<{ item: TodoType }>>, { title: string }>
+        ('todo-lists', {title})
     },
     updateTodoTitle(todolistId: string, title: string) {
-        return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
+        return instance.put<CommonResponseType,AxiosResponse<CommonResponseType>,{title:string}>(`todo-lists/${todolistId}`, {title:title})
     },
     deleteTodo(todolistId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
@@ -30,7 +31,7 @@ type TodoType = {
     title: string
 }
 
-type CommonResponseType<T={}> = {
+type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsError: Array<string>
