@@ -10,10 +10,10 @@ const instance = axios.create({
 
 export const todolistApi = {
     getTodos() {
-        return instance.get<Array<TodoType>>('todo-lists')
+        return instance.get<Array<TodoListType>>('todo-lists')
     },
     createTodo(title: string) {
-        return instance.post<CommonResponseType<{ item: TodoType }>, AxiosResponse<CommonResponseType<{ item: TodoType }>>, { title: string }>
+        return instance.post<CommonResponseType<{ item: TodoListType }>, AxiosResponse<CommonResponseType<{ item: TodoListType }>>, { title: string }>
         ('todo-lists', {title})
     },
     updateTodoTitle(todolistId: string, title: string) {
@@ -29,34 +29,70 @@ export const todolistApi = {
         return instance.post<CommonResponseType<{item:TaskType}>, AxiosResponse<CommonResponseType<{item:TaskType}>>,{title:string}>
         (`todo-lists/${todolistId}/tasks`,{title})
     },
+    // updateTaskTitle(todolistId: string,taskId:string, title: string) {
+    //     return instance.put<CommonResponseType<{item:TaskType}>, AxiosResponse<CommonResponseType<{item:TaskType}>>,
+    //         { title: string
+    //         description: string
+    //         completed: false
+    //         status:number
+    //         priority: number
+    //         startDate: string
+    //         deadline: string>
+    //     (`todo-lists/${todolistId}/tasks`, {title: title})
+    // },
 }
 
-type TodoType = {
+//types
+type TodoListType = {
     id: string
     addedDate: string
     order: number
     title: string
 }
 
-type CommonResponseType<T = {}> = {
+type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     fieldsError: Array<string>
-    data: T
+    data: D
+}
+
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
 }
 
 type TaskType = {
     description: string
     title: string
     completed: boolean
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
     id: string
     todoListId: string
     order: number
     addedDate: string
+}
+
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
 }
 
 type GetTasksResponseType<T = {}> = {
