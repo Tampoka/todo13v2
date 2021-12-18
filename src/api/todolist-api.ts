@@ -17,11 +17,18 @@ export const todolistApi = {
         ('todo-lists', {title})
     },
     updateTodoTitle(todolistId: string, title: string) {
-        return instance.put<CommonResponseType,AxiosResponse<CommonResponseType>,{title:string}>(`todo-lists/${todolistId}`, {title:title})
+        return instance.put<CommonResponseType, AxiosResponse<CommonResponseType>, { title: string }>(`todo-lists/${todolistId}`, {title: title})
     },
     deleteTodo(todolistId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
-    }
+    },
+    getTasks(todolistId: string) {
+        return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId:string,title:string){
+        return instance.post<CommonResponseType<{item:TaskType}>, AxiosResponse<CommonResponseType<{item:TaskType}>>,{title:string}>
+        (`todo-lists/${todolistId}/tasks`,{title})
+    },
 }
 
 type TodoType = {
@@ -36,4 +43,24 @@ type CommonResponseType<T = {}> = {
     messages: Array<string>
     fieldsError: Array<string>
     data: T
+}
+
+type TaskType = {
+    description: string
+    title: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+
+type GetTasksResponseType<T = {}> = {
+    error: null | string
+    items: TaskType[]
+    totalCount: number
 }
