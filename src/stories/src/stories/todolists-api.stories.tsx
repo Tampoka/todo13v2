@@ -142,12 +142,12 @@ export const UpdateTask = () => {
     const [todolistId, setTodolistId] = useState<string>('')
     const [taskId, setTaskId] = useState<string>('')
     const [model, setModel] = useState<UpdateTaskModelType>({
-        title: 'Run away',
+        title: '',
         description: 'New task',
         status: 3,
         priority: 1,
-        startDate: 'today',
-        deadline: 'tomorrow',
+        startDate: '',
+        deadline: '',
     })
 
     const updateModel = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -158,6 +158,7 @@ export const UpdateTask = () => {
             .then((res) => {
                 setState(res.data)
             });
+        console.log(model)
     }
 
     return <div> {JSON.stringify(state)}
