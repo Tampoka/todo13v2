@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {todolistApi} from "../../../api/todolist-api";
+import {TaskPriorities, TaskStatuses, todolistApi} from "../../../api/todolist-api";
 
 export default {
     title: 'API'
@@ -56,7 +56,7 @@ export const UpdateTodolistTitle = () => {
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistApi.getTasks("1d32d8b5-fbb9-4ce2-930c-b8e8ead8731d")
+        todolistApi.getTasks("5535ee0d-e346-40a8-a008-f0b5fea6a718")
             .then((res) => {
                 setState(res.data)
             });
@@ -70,9 +70,41 @@ export const GetTasks = () => {
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistApi.createTask("1d32d8b5-fbb9-4ce2-930c-b8e8ead8731d",'yaaaaaaaaa')
+        todolistApi.createTask("5535ee0d-e346-40a8-a008-f0b5fea6a718",'bbbbbbbbbbbb')
             .then((res) => {
                 setState(res.data.data)
+            });
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+// export const UpdateTask =() => {
+//     const [state, setState] = useState<any>(null)
+//     useEffect(() => {
+//         todolistApi.updateTask ("5535ee0d-e346-40a8-a008-f0b5fea6a718","b27db0f9-2779-44fb-9f58-249a08ac6f87",
+//             {
+//                 title: 'Run away',
+//                 description: 'New task',
+//                 status: 3,
+//                 priority: 1,
+//                 startDate: 'today',
+//                 deadline: 'tomorrow'
+//             })
+//             .then((res) => {
+//                 setState(res.data.data)
+//             });
+//
+//     }, [])
+//
+//     return <div> {JSON.stringify(state)}</div>
+// }
+
+export const DeleteTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        todolistApi.deleteTask("5535ee0d-e346-40a8-a008-f0b5fea6a718","4bc45fe1-7385-4fff-be61-df103127680f")
+            .then((res) => {
+                setState(res.data)
             });
     }, [])
 
