@@ -44,7 +44,7 @@ export const todolistApi = {
 }
 
 //types
-type TodoListType = {
+export type TodoListType = {
     id: string
     addedDate: string
     order: number
@@ -73,10 +73,9 @@ export enum TaskPriorities {
     Later = 4
 }
 
-type TaskType = {
+export type TaskType = {
     description: string
     title: string
-    completed: boolean
     status: TaskStatuses
     priority: TaskPriorities
     startDate: string
